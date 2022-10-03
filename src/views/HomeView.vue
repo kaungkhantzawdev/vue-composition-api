@@ -1,25 +1,26 @@
 <template>
   <div>
-    <PostList :posts = 'posts' />
+    <p class="text-danger" v-if="error">{{ error }}</p>
+    <PostList v-if="data" :posts = 'posts' />
+    <button class="btn btn-primary me-2" @click="data = !data">toggle button</button>
+    <button class="btn btn-primary" @click="posts.pop()">hide btn</button>
   </div>
 </template>
 <script>
 
   import PostList from "../components/PostList.vue"
-  import {ref} from "vue";
+  import { ref} from "vue";
+  import getPosts from '../composiables/getPosts';
 
   export default {
     components: {
       PostList
     },
     setup(){
-      const posts = ref([
-        {title: "hello", des: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto assumenda delectus ea harum id itaque, magnam minima necessitatibus nisi non obcaecati pariatur quis repudiandae sapiente sequi sit veritatis vitae voluptatibus?", category: "hello-cat"},
-        {title: "Top 3 frontend FrameWork", des: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto assumenda delectus ea harum id itaque, magnam minima necessitatibus nisi non obcaecati pariatur quis repudiandae sapiente sequi sit veritatis vitae voluptatibus?", category: "hello-man"}
-      ])
-
-
-      return {posts}
+      let data = ref(true)
+      const { posts, error, load} = getPosts()
+      load()
+      return {posts, data, error}
     }
 
   }

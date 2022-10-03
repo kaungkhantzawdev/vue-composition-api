@@ -1,7 +1,10 @@
 <template>
   <div>
+  
     <div class="">
-        <h2 class="">{{ post.title }}</h2>
+        <router-link :to="{ name: 'detail' , params: { id: post.id } }">
+          <h2 class="">{{ post.title }}</h2>
+        </router-link>
         <p class="">{{ spinnet }}</p>
     </div>
   </div>
@@ -13,7 +16,7 @@ export default {
     props: ['post'],
     setup(props){
         const spinnet = computed(() => {
-            return props.post.des.substring(0, 50)+" ..."
+            return props.post.description.substring(0, 50)+" ..."
         });
 
         return { spinnet }
